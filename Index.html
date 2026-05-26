@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雅思口语练习</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }
+        textarea { width: 100%; height: 150px; margin: 10px 0; padding: 10px; font-size: 16px; }
+        button { background: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer; font-size: 16px; }
+        #result { margin-top: 20px; padding: 15px; background: #f5f5f5; min-height: 100px; }
+    </style>
+</head>
+<body>
+    <h1>雅思口语练习助手</h1>
+    <p>输入你的雅思口语答案（中文），AI将给出改进建议：</p>
+    <textarea id="input" placeholder="在这里输入你的答案..."></textarea>
+    <button onclick="analyze()">分析答案</button>
+    <div id="result">AI反馈将显示在这里...</div>
+
+    <script>
+        async function analyze() {
+            const input = document.getElementById('input').value;
+            const result = document.getElementById('result');
+            
+            if (!input) {
+                result.innerHTML = '请先输入内容';
+                return;
+            }
+            
+            result.innerHTML = '分析中...';
+            
+            try {
+                const response = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: input })
+                });
+                
+                const data = await response.json();
+                result.innerHTML = data.result || '分析失败，请重试';
+            } catch (error) {
+                result.innerHTML = '连接失败：' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>
