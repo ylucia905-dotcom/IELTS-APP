@@ -13,7 +13,7 @@ export default async function handler(req, res) {
                 'Authorization': `Bearer ${process.env.ARK_API_KEY}`
             },
             body: JSON.stringify({
-                model: 'doubao-pro-4k',
+                model: 'doubao-seed-2-0-pro-260215',
                 messages: [
                     {
                         role: 'system',
